@@ -1,59 +1,310 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Courses</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explore Courses | Smart E-Learn Hub</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
-<header>
+  <!-- ================= NAVBAR ================= -->
+  <header>
     <nav class="navbar">
-        <div class="logo">E-Learn Hub</div>
+      <div class="logo" onclick="window.location.href='index.html'" style="cursor: pointer;">
+        <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
+        <span>E-Learn <span class="ai-gradient-text">Hub</span></span>
+      </div>
 
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="courses.html">Courses</a></li>
-            <li><a href="dashboard.html">Dashboard</a></li>
-        </ul>
+      <ul class="nav-links">
+        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="courses.html" class="active"><i class="fas fa-compass"></i> Explore Courses</a></li>
+        <li><a href="dashboard.html"><i class="fas fa-chart-pie"></i> Dashboard</a></li>
+        <li class="nav-auth-item"><a href="pages/login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+        <li class="nav-auth-item">
+          <a href="pages/register.html" class="btn btn-sm btn-primary">
+            Register
+          </a>
+        </li>
+      </ul>
+
+      <button class="mobile-menu-btn" onclick="alert('Menu clicked!')">
+        <i class="fas fa-bars"></i>
+      </button>
     </nav>
-</header>
+  </header>
 
-<section class="course-section">
-    <h1>Popular Courses</h1>
-
-    <div class="course-container">
-
-        <div class="course-card">
-            <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4" alt="course">
-            <h3>Web Development</h3>
-            <p>Learn HTML, CSS, JavaScript and React.</p>
-            <button onclick="enrollCourse()">Enroll Now</button>
-        </div>
-
-        <div class="course-card">
-            <img src="https://images.unsplash.com/photo-1526379095098-d400fd0bf935" alt="course">
-            <h3>Python Programming</h3>
-            <p>Master Python for development and AI.</p>
-            <button onclick="enrollCourse()">Enroll Now</button>
-        </div>
-
-        <div class="course-card">
-            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3" alt="course">
-            <h3>UI/UX Design</h3>
-            <p>Design beautiful and user-friendly interfaces.</p>
-            <button onclick="enrollCourse()">Enroll Now</button>
-        </div>
-
+  <!-- ================= COURSES HEADER ================= -->
+  <section class="courses-hero">
+    <div class="container">
+      <span class="badge badge-ai" style="margin-bottom: 14px;">
+        <i class="fas fa-graduation-cap"></i> Comprehensive Catalog
+      </span>
+      <h1 style="font-size: 2.8rem; margin-bottom: 12px;">Discover & Master New Skills</h1>
+      <p style="max-width: 600px; margin: 0 auto; color: var(--text-secondary);">
+        Choose from expert-led courses across Web Development, Artificial Intelligence, Data Science, Cybersecurity, and Design.
+      </p>
     </div>
-</section>
+  </section>
 
-<footer>
-    <p>© 2026 E-Learn Hub</p>
-</footer>
+  <!-- ================= COURSE CONTROLS & GRID ================= -->
+  <main class="container" style="padding-bottom: 80px;">
+    
+    <!-- Filter & Search Controls Wrapper -->
+    <div class="course-controls-wrapper">
+      <div class="search-filter-row">
+        
+        <!-- Live Search Input -->
+        <div class="search-input-group">
+          <i class="fas fa-search"></i>
+          <input type="text" id="courseSearchInput" placeholder="Search courses by title, topic, or instructor..." oninput="handleFilterChange()">
+        </div>
 
-<script src="script.js"></script>
+        <!-- Level Filter -->
+        <select class="filter-select" id="levelFilterSelect" onchange="handleFilterChange()">
+          <option value="all">All Difficulty Levels</option>
+          <option value="Beginner">Beginner</option>
+          <option value="Intermediate">Intermediate</option>
+          <option value="Advanced">Advanced</option>
+        </select>
+
+        <!-- Sort Select -->
+        <select class="filter-select" id="sortSelect" onchange="handleFilterChange()">
+          <option value="popular">Most Popular</option>
+          <option value="rating">Highest Rated</option>
+          <option value="lessons">Most Lessons</option>
+        </select>
+
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="category-pills-row">
+        <button class="category-pill active" onclick="setCategoryFilter('all', this)">All Categories</button>
+        <button class="category-pill" onclick="setCategoryFilter('web', this)">Web Development</button>
+        <button class="category-pill" onclick="setCategoryFilter('programming', this)">Programming</button>
+        <button class="category-pill" onclick="setCategoryFilter('ai', this)">AI & Machine Learning</button>
+        <button class="category-pill" onclick="setCategoryFilter('data', this)">Data Science</button>
+        <button class="category-pill" onclick="setCategoryFilter('design', this)">Design</button>
+        <button class="category-pill" onclick="setCategoryFilter('security', this)">Cybersecurity</button>
+      </div>
+    </div>
+
+    <!-- Course Grid -->
+    <div class="course-grid" id="courseGridContainer">
+      <!-- Injected via JavaScript -->
+    </div>
+
+    <!-- No Results Placeholder -->
+    <div class="no-results" id="noCoursesNotice" style="display: none;">
+      <i class="fas fa-search"></i>
+      <h3>No matching courses found</h3>
+      <p style="margin-top: 8px;">Try adjusting your keyword or clearing the filters.</p>
+    </div>
+
+  </main>
+
+  <!-- ================= COURSE DETAILS MODAL ================= -->
+  <div class="modal-backdrop" id="courseModal">
+    <div class="modal-content" id="modalContentNode">
+      <button class="modal-close-btn" onclick="closeCourseModal()">
+        <i class="fas fa-times"></i>
+      </button>
+
+      <div id="modalBody">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <div class="container">
+      <div class="footer-bottom">
+        <p>© 2026 E-Learn Hub | Smart E-Learning Platform with AI-Based Personalized Learning</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="scripts.js"></script>
+  <script>
+    let activeCategory = "all";
+
+    function setCategoryFilter(category, buttonEl) {
+      activeCategory = category;
+      document.querySelectorAll(".category-pill").forEach(el => el.classList.remove("active"));
+      if (buttonEl) buttonEl.classList.add("active");
+      handleFilterChange();
+    }
+
+    function handleFilterChange() {
+      const searchKeyword = document.getElementById("courseSearchInput").value.toLowerCase().trim();
+      const levelFilter = document.getElementById("levelFilterSelect").value;
+      const sortBy = document.getElementById("sortSelect").value;
+
+      let filtered = COURSES_DATABASE.filter(course => {
+        const matchesCategory = activeCategory === "all" || course.category === activeCategory;
+        const matchesSearch = course.title.toLowerCase().includes(searchKeyword) ||
+                              course.description.toLowerCase().includes(searchKeyword) ||
+                              course.instructor.toLowerCase().includes(searchKeyword);
+        const matchesLevel = levelFilter === "all" || course.level.toLowerCase().includes(levelFilter.toLowerCase());
+
+        return matchesCategory && matchesSearch && matchesLevel;
+      });
+
+      // Sorting
+      if (sortBy === "rating") {
+        filtered.sort((a, b) => b.rating - a.rating);
+      } else if (sortBy === "lessons") {
+        filtered.sort((a, b) => b.lessonsCount - a.lessonsCount);
+      } else {
+        filtered.sort((a, b) => b.studentsCount - a.studentsCount);
+      }
+
+      renderCourses(filtered);
+    }
+
+    function renderCourses(courses) {
+      const container = document.getElementById("courseGridContainer");
+      const noResults = document.getElementById("noCoursesNotice");
+      const user = getCurrentUser();
+      const enrolledList = user?.enrolledCourses || [];
+
+      if (courses.length === 0) {
+        container.innerHTML = "";
+        noResults.style.display = "block";
+        return;
+      }
+
+      noResults.style.display = "none";
+      container.innerHTML = courses.map(course => {
+        const isEnrolled = enrolledList.includes(course.id);
+        const progress = getUserCourseProgress(course.id);
+
+        return `
+          <div class="course-card">
+            <div class="course-thumbnail">
+              <img src="${course.image}" alt="${course.title}">
+              <span class="badge badge-primary course-level-badge">${course.level}</span>
+              <span class="course-category-tag">${course.categoryName}</span>
+            </div>
+
+            <div class="course-body">
+              <div class="course-meta-top">
+                <div class="course-rating"><i class="fas fa-star"></i> ${course.rating}</div>
+                <div class="course-duration"><i class="far fa-clock"></i> ${course.duration}</div>
+              </div>
+
+              <h3>${course.title}</h3>
+              <p>${course.description}</p>
+
+              ${isEnrolled ? `
+                <div class="progress-bar-container" style="margin-bottom: 12px;">
+                  <div class="progress-bar-fill" style="width: ${progress.percent}%;"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 16px;">
+                  <span>${progress.percent}% Completed</span>
+                  <span>${progress.completedLessons.length} / ${progress.totalLessons} Lessons</span>
+                </div>
+              ` : ''}
+
+              <div class="course-footer">
+                <button class="btn btn-sm btn-outline" onclick="openCourseDetails('${course.id}')">
+                  <i class="fas fa-info-circle"></i> Details
+                </button>
+
+                ${isEnrolled ? `
+                  <a href="learning.html?course=${course.id}" class="btn btn-sm btn-primary">
+                    <i class="fas fa-play-circle"></i> Resume
+                  </a>
+                ` : `
+                  <button class="btn btn-sm btn-ai" onclick="handleEnrollClick('${course.id}')">
+                    <i class="fas fa-plus"></i> Enroll Free
+                  </button>
+                `}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function handleEnrollClick(courseId) {
+      const ok = enrollInCourse(courseId);
+      if (ok) {
+        handleFilterChange();
+      }
+    }
+
+    function openCourseDetails(courseId) {
+      const course = COURSES_DATABASE.find(c => c.id === courseId);
+      if (!course) return;
+
+      const modal = document.getElementById("courseModal");
+      const modalBody = document.getElementById("modalBody");
+      const user = getCurrentUser();
+      const isEnrolled = user?.enrolledCourses?.includes(course.id);
+
+      modalBody.innerHTML = `
+        <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 12px;">
+          <span class="badge badge-ai">${course.categoryName}</span>
+          <span class="badge badge-primary">${course.level}</span>
+        </div>
+
+        <h2 style="font-size: 1.8rem; margin-bottom: 12px;">${course.title}</h2>
+        <p style="margin-bottom: 24px; font-size: 1rem; color: var(--text-secondary);">${course.description}</p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; padding: 16px; background: var(--bg-card); border-radius: var(--radius-md);">
+          <div><strong>Instructor:</strong> ${course.instructor}</div>
+          <div><strong>Duration:</strong> ${course.duration}</div>
+          <div><strong>Lessons:</strong> ${course.lessonsCount} Total</div>
+          <div><strong>Rating:</strong> ⭐ ${course.rating} / 5.0</div>
+        </div>
+
+        <h3 style="margin-bottom: 14px; font-size: 1.25rem;">Curriculum Outline</h3>
+        <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px;">
+          ${course.syllabus.map((mod, idx) => `
+            <div style="background: var(--bg-card); padding: 14px 18px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+              <h4 style="font-size: 1rem; margin-bottom: 8px; color: #ffffff;">${mod.module}</h4>
+              <ul style="list-style: disc; margin-left: 20px; font-size: 0.88rem; color: var(--text-secondary);">
+                ${mod.lessons.map(l => `<li>${l.title} (${l.duration})</li>`).join('')}
+              </ul>
+            </div>
+          `).join('')}
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 12px;">
+          <button class="btn btn-secondary" onclick="closeCourseModal()">Close</button>
+          ${isEnrolled ? `
+            <a href="learning.html?course=${course.id}" class="btn btn-primary">
+              <i class="fas fa-play-circle"></i> Continue in Classroom
+            </a>
+          ` : `
+            <button class="btn btn-ai" onclick="handleEnrollClick('${course.id}'); closeCourseModal();">
+              <i class="fas fa-plus"></i> Enroll In This Course
+            </button>
+          `}
+        </div>
+      `;
+
+      modal.classList.add("active");
+    }
+
+    function closeCourseModal() {
+      document.getElementById("courseModal").classList.remove("active");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Check for category in URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const cat = urlParams.get("cat");
+      if (cat) {
+        const pill = Array.from(document.querySelectorAll(".category-pill")).find(p => p.textContent.toLowerCase().includes(cat));
+        setCategoryFilter(cat, pill);
+      } else {
+        handleFilterChange();
+      }
+    });
+  </script>
 </body>
 </html>

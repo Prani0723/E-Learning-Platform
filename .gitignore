@@ -1,0 +1,13 @@
+# Dependency and build directories
+node_modules/
+.DS_Store
+Thumbs.db
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.log
+
+# Scratch and system generated
+.system_generated/
+scratch/

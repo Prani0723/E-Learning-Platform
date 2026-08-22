@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Classroom | Smart E-Learn Hub</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <!-- Top Header / Classroom Navbar -->
+  <header>
+    <nav class="navbar">
+      <div class="logo" onclick="window.location.href='index.html'" style="cursor: pointer;">
+        <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
+        <span>E-Learn <span class="ai-gradient-text">Hub</span></span>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="courses.html"><i class="fas fa-compass"></i> Courses</a></li>
+        <li><a href="dashboard.html"><i class="fas fa-chart-pie"></i> Dashboard</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="dashboard.html" class="btn btn-sm btn-secondary">
+          <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Split Screen Classroom Layout -->
+  <div class="classroom-layout" id="classroomApp">
+    
+    <!-- LEFT SIDEBAR: Course Curriculum & Lessons -->
+    <aside class="classroom-sidebar">
+      <div class="sidebar-course-header">
+        <span class="badge badge-ai" id="sidebarCategory">Course Curriculum</span>
+        <h3 id="sidebarCourseTitle" style="margin-top: 6px;">Loading Course...</h3>
+        
+        <div class="progress-bar-container" style="margin: 12px 0 6px;">
+          <div class="progress-bar-fill" id="sidebarProgressFill" style="width: 0%;"></div>
+        </div>
+        <div class="progress-stats-text">
+          <span id="sidebarProgressPercent">0% Completed</span>
+          <span id="sidebarLessonCount">0 / 0 Lessons</span>
+        </div>
+      </div>
+
+      <div class="curriculum-list" id="curriculumList">
+        <!-- Injected via JavaScript -->
+      </div>
+    </aside>
+
+    <!-- RIGHT MAIN: Lesson Player, Content, Tabs & AI Tutor -->
+    <main class="classroom-main">
+      <div class="classroom-top-nav">
+        <div>
+          <span class="badge badge-primary" id="currentModuleLabel">Module 1</span>
+          <h2 id="currentLessonTitle" style="margin-top: 6px; font-size: 1.6rem;">Lesson Overview</h2>
+        </div>
+
+        <button class="btn btn-sm btn-outline" id="markCompleteBtn" onclick="handleToggleCurrentLesson()">
+          <i class="fas fa-check-circle"></i> <span>Mark Complete</span>
+        </button>
+      </div>
+
+      <!-- Video Player Wrapper -->
+      <div class="video-player-wrapper">
+        <iframe id="videoPlayer" src="https://www.youtube.com/embed/UB1O30fR-EE" title="Course Lesson Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="classroom-tabs">
+        <button class="tab-btn active" onclick="switchClassroomTab('notes', this)">
+          <i class="fas fa-book-open"></i> Lesson Notes & Key Takeaways
+        </button>
+        <button class="tab-btn" onclick="switchClassroomTab('ai-tutor', this)">
+          <i class="fas fa-robot"></i> AI Study Copilot
+        </button>
+        <button class="tab-btn" onclick="switchClassroomTab('quiz', this)">
+          <i class="fas fa-brain"></i> Course Quiz & Certification
+        </button>
+      </div>
+
+      <!-- TAB 1: Lesson Notes -->
+      <div class="tab-content active" id="tab-notes">
+        <div class="glass-panel" style="padding: 24px;">
+          <h3 style="margin-bottom: 12px; font-size: 1.25rem;"><i class="fas fa-lightbulb" style="color: #fbbf24; margin-right: 8px;"></i> Key Concepts & Resources</h3>
+          <p id="lessonNotesText" style="font-size: 1rem; line-height: 1.8; color: var(--text-primary);">
+            Select a lesson from the curriculum sidebar to view detailed notes, code examples, and best practice guides.
+          </p>
+
+          <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-subtle); display: flex; gap: 14px; flex-wrap: wrap;">
+            <button class="btn btn-sm btn-secondary" onclick="showToast('Cheat Sheet downloaded for offline study!', 'success')">
+              <i class="fas fa-download"></i> Download Lesson Cheat Sheet
+            </button>
+            <button class="btn btn-sm btn-secondary" onclick="switchClassroomTab('ai-tutor', document.querySelectorAll('.tab-btn')[1])">
+              <i class="fas fa-question-circle"></i> Ask AI to Explain
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: AI Study Copilot -->
+      <div class="tab-content" id="tab-ai-tutor">
+        <div class="ai-tutor-container">
+          <div class="ai-chat-messages" id="aiChatBox">
+            <div class="chat-bubble bot">
+              <i class="fas fa-sparkles" style="color: #c084fc; margin-right: 6px;"></i>
+              <strong>AI Copilot:</strong> Hello! I am your AI personalized tutor for this lesson. Ask me any question about the concepts, code examples, or how to solve tricky edge cases!
+            </div>
+          </div>
+
+          <form class="ai-chat-input-row" onsubmit="handleSendAIMessage(event)">
+            <input type="text" id="aiChatInput" placeholder="Ask AI Copilot about this lesson (e.g. 'Explain Flexbox in simple terms')..." autocomplete="off">
+            <button type="submit" class="btn btn-ai btn-sm">
+              <i class="fas fa-paper-plane"></i> Send
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- TAB 3: Course Quiz & Evaluation -->
+      <div class="tab-content" id="tab-quiz">
+        <div class="quiz-container" id="quizContainer">
+          <!-- Dynamically populated by JavaScript -->
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="scripts.js"></script>
+  <script>
+    // Classroom Controller Script
+    let currentCourse = null;
+    let currentLesson = null;
+    let currentModule = null;
+
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    function initClassroom() {
+      const courseId = getQueryParam("course") || "web-dev";
+      currentCourse = COURSES_DATABASE.find(c => c.id === courseId) || COURSES_DATABASE[0];
+
+      // Auto-enroll if user logged in and not enrolled yet
+      const user = getCurrentUser();
+      if (user && !user.enrolledCourses?.includes(currentCourse.id)) {
+        enrollInCourse(currentCourse.id);
+      }
+
+      // Populate Sidebar
+      document.getElementById("sidebarCourseTitle").textContent = currentCourse.title;
+      document.getElementById("sidebarCategory").textContent = currentCourse.categoryName;
+      renderCurriculum();
+
+      // Load first lesson or saved position
+      if (currentCourse.syllabus[0]?.lessons[0]) {
+        loadLesson(currentCourse.syllabus[0].lessons[0], currentCourse.syllabus[0]);
+      }
+
+      // Initialize Quiz View
+      renderQuizView();
+    }
+
+    function renderCurriculum() {
+      const listContainer = document.getElementById("curriculumList");
+      listContainer.innerHTML = "";
+
+      const progress = getUserCourseProgress(currentCourse.id);
+      document.getElementById("sidebarProgressFill").style.width = `${progress.percent}%`;
+      document.getElementById("sidebarProgressPercent").textContent = `${progress.percent}% Completed`;
+      document.getElementById("sidebarLessonCount").textContent = `${progress.completedLessons.length} / ${progress.totalLessons} Lessons`;
+
+      currentCourse.syllabus.forEach((mod, modIdx) => {
+        const modEl = document.createElement("div");
+        modEl.className = "curriculum-module";
+        
+        const modTitle = document.createElement("div");
+        modTitle.className = "module-header";
+        modTitle.textContent = mod.module;
+        modEl.appendChild(modTitle);
+
+        mod.lessons.forEach(lesson => {
+          const isDone = progress.completedLessons.includes(lesson.id);
+          const isCurrent = currentLesson?.id === lesson.id;
+
+          const item = document.createElement("div");
+          item.className = `lesson-item ${isDone ? 'completed' : ''} ${isCurrent ? 'active' : ''}`;
+          item.id = `lesson-item-${lesson.id}`;
+          item.onclick = () => loadLesson(lesson, mod);
+
+          item.innerHTML = `
+            <div class="lesson-check">
+              <i class="fas fa-check"></i>
+            </div>
+            <div class="lesson-meta">
+              <div class="lesson-title">${lesson.title}</div>
+              <div class="lesson-duration"><i class="far fa-clock"></i> ${lesson.duration}</div>
+            </div>
+          `;
+          modEl.appendChild(item);
+        });
+
+        listContainer.appendChild(modEl);
+      });
+    }
+
+    function loadLesson(lesson, mod) {
+      currentLesson = lesson;
+      currentModule = mod;
+
+      document.querySelectorAll(".lesson-item").forEach(el => el.classList.remove("active"));
+      const activeItem = document.getElementById(`lesson-item-${lesson.id}`);
+      if (activeItem) activeItem.classList.add("active");
+
+      document.getElementById("currentModuleLabel").textContent = mod ? mod.module.split(":")[0] : "Module";
+      document.getElementById("currentLessonTitle").textContent = lesson.title;
+      document.getElementById("lessonNotesText").innerHTML = `
+        <strong>${lesson.title}</strong><br><br>
+        ${lesson.notes}<br><br>
+        <em>💡 Pro Tip: Practice writing these concepts hands-on to accelerate retention.</em>
+      `;
+
+      // Update Video
+      document.getElementById("videoPlayer").src = `https://www.youtube.com/embed/${lesson.videoId}?autoplay=0`;
+
+      // Update Button State
+      const progress = getUserCourseProgress(currentCourse.id);
+      const isDone = progress.completedLessons.includes(lesson.id);
+      updateCompleteButtonState(isDone);
+    }
+
+    function updateCompleteButtonState(isDone) {
+      const btn = document.getElementById("markCompleteBtn");
+      if (isDone) {
+        btn.className = "btn btn-sm btn-primary";
+        btn.innerHTML = `<i class="fas fa-check-double"></i> Completed`;
+      } else {
+        btn.className = "btn btn-sm btn-outline";
+        btn.innerHTML = `<i class="fas fa-check-circle"></i> Mark Complete`;
+      }
+    }
+
+    function handleToggleCurrentLesson() {
+      if (!currentLesson) return;
+      const isDone = toggleLessonCompleted(currentCourse.id, currentLesson.id);
+      updateCompleteButtonState(isDone);
+      renderCurriculum();
+    }
+
+    function switchClassroomTab(tabId, tabBtn) {
+      document.querySelectorAll(".classroom-tabs .tab-btn").forEach(btn => btn.classList.remove("active"));
+      document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+
+      tabBtn.classList.add("active");
+      const target = document.getElementById(`tab-${tabId}`);
+      if (target) target.classList.add("active");
+    }
+
+    function handleSendAIMessage(e) {
+      e.preventDefault();
+      const input = document.getElementById("aiChatInput");
+      const text = input.value.trim();
+      if (!text) return;
+
+      const chatBox = document.getElementById("aiChatBox");
+
+      // Append user bubble
+      const userBubble = document.createElement("div");
+      userBubble.className = "chat-bubble user";
+      userBubble.textContent = text;
+      chatBox.appendChild(userBubble);
+      input.value = "";
+
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      // Simulate AI typing delay
+      setTimeout(() => {
+        const responseText = aiEngine.askTutor(text, currentCourse?.id, currentLesson?.title);
+        const botBubble = document.createElement("div");
+        botBubble.className = "chat-bubble bot";
+        botBubble.innerHTML = `<i class="fas fa-sparkles" style="color: #c084fc; margin-right: 6px;"></i><strong>AI Copilot:</strong><br>${responseText.replace(/\n/g, '<br>')}`;
+        chatBox.appendChild(botBubble);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }, 400);
+    }
+
+    // --- Quiz Engine ---
+    let userQuizAnswers = {};
+
+    function renderQuizView() {
+      const container = document.getElementById("quizContainer");
+      const quiz = currentCourse.quiz || [];
+
+      if (quiz.length === 0) {
+        container.innerHTML = `<p>No quiz currently available for this course.</p>`;
+        return;
+      }
+
+      const progress = getUserCourseProgress(currentCourse.id);
+
+      if (progress.quizPassed) {
+        container.innerHTML = `
+          <div class="quiz-score-card">
+            <div class="score-circle"><i class="fas fa-award"></i></div>
+            <h2 style="color: var(--success); margin-bottom: 8px;">Course Quiz Passed!</h2>
+            <p style="margin-bottom: 24px;">Congratulations! You achieved certification eligibility with a score of ${progress.quizScore}%.</p>
+            <div style="display: flex; gap: 14px; justify-content: center;">
+              <a href="certificate.html?course=${currentCourse.id}" class="btn btn-primary btn-lg">
+                <i class="fas fa-certificate"></i> View & Print Certificate
+              </a>
+              <button class="btn btn-outline" onclick="resetQuiz()">
+                <i class="fas fa-redo"></i> Retake Quiz
+              </button>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      let html = `
+        <div class="quiz-header">
+          <div>
+            <h3>${currentCourse.title} - Final Assessment</h3>
+            <p style="font-size: 0.9rem;">Answer all questions to qualify for your official certificate.</p>
+          </div>
+          <div class="quiz-timer">
+            <i class="fas fa-stopwatch"></i> Untimed Mode
+          </div>
+        </div>
+      `;
+
+      quiz.forEach((q, qIdx) => {
+        html += `
+          <div class="question-box">
+            <div class="question-text">${qIdx + 1}. ${q.question}</div>
+            <div class="options-list">
+              ${q.options.map((opt, optIdx) => `
+                <div class="option-item ${userQuizAnswers[qIdx] === optIdx ? 'selected' : ''}" 
+                     onclick="selectQuizOption(${qIdx}, ${optIdx}, this)">
+                  <span style="font-weight: 700; width: 24px;">${String.fromCharCode(65 + optIdx)}.</span>
+                  <span>${opt}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      });
+
+      html += `
+        <div style="text-align: right; margin-top: 30px;">
+          <button class="btn btn-primary btn-lg" onclick="evaluateQuiz()">
+            <i class="fas fa-paper-plane"></i> Submit Quiz For Evaluation
+          </button>
+        </div>
+      `;
+
+      container.innerHTML = html;
+    }
+
+    function selectQuizOption(qIdx, optIdx, element) {
+      userQuizAnswers[qIdx] = optIdx;
+      const parent = element.parentElement;
+      parent.querySelectorAll(".option-item").forEach(el => el.classList.remove("selected"));
+      element.classList.add("selected");
+    }
+
+    function evaluateQuiz() {
+      const quiz = currentCourse.quiz || [];
+      let score = 0;
+      let answeredCount = Object.keys(userQuizAnswers).length;
+
+      if (answeredCount < quiz.length) {
+        showToast("Please answer all questions before submitting!", "warning");
+        return;
+      }
+
+      quiz.forEach((q, idx) => {
+        if (userQuizAnswers[idx] === q.answer) {
+          score++;
+        }
+      });
+
+      const percentage = Math.round((score / quiz.length) * 100);
+      const passed = percentage >= 70;
+
+      // Save to storage
+      const user = getCurrentUser();
+      if (user) {
+        const allProgress = JSON.parse(localStorage.getItem(STORAGE_KEYS.PROGRESS)) || {};
+        if (!allProgress[user.email]) allProgress[user.email] = {};
+        if (!allProgress[user.email][currentCourse.id]) {
+          allProgress[user.email][currentCourse.id] = { completedLessons: [] };
+        }
+        allProgress[user.email][currentCourse.id].quizPassed = passed;
+        allProgress[user.email][currentCourse.id].quizScore = percentage;
+        localStorage.setItem(STORAGE_KEYS.PROGRESS, JSON.stringify(allProgress));
+
+        if (passed) {
+          awardCourseCertificate(currentCourse.id);
+        }
+      }
+
+      const container = document.getElementById("quizContainer");
+      if (passed) {
+        container.innerHTML = `
+          <div class="quiz-score-card">
+            <div class="score-circle">${percentage}%</div>
+            <h2 style="color: var(--success); margin-bottom: 8px;">Quiz Passed! 🎉</h2>
+            <p style="margin-bottom: 24px; color: var(--text-secondary);">Outstanding work! You scored ${percentage}%, unlocking your verified certificate of completion.</p>
+            <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+              <a href="certificate.html?course=${currentCourse.id}" class="btn btn-primary btn-lg">
+                <i class="fas fa-certificate"></i> Claim & Print Certificate
+              </a>
+              <a href="dashboard.html" class="btn btn-secondary btn-lg">
+                <i class="fas fa-chart-pie"></i> View Dashboard
+              </a>
+            </div>
+          </div>
+        `;
+        showToast("Congratulations! Course certificate unlocked!", "success");
+      } else {
+        container.innerHTML = `
+          <div class="quiz-score-card">
+            <div class="score-circle" style="background: linear-gradient(135deg, #ef4444, #f59e0b);">${percentage}%</div>
+            <h2 style="color: var(--warning); margin-bottom: 8px;">Score: ${percentage}% (Passing is 70%)</h2>
+            <p style="margin-bottom: 24px; color: var(--text-secondary);">
+              🤖 <strong>AI Diagnosis:</strong> Review the core lessons in the sidebar and ask the AI Copilot to explain tricky concepts, then try again!
+            </p>
+            <button class="btn btn-primary" onclick="resetQuiz()">
+              <i class="fas fa-redo"></i> Try Quiz Again
+            </button>
+          </div>
+        `;
+        showToast("You did not reach the 70% threshold. Review and try again!", "warning");
+      }
+    }
+
+    function resetQuiz() {
+      userQuizAnswers = {};
+      renderQuizView();
+    }
+
+    document.addEventListener("DOMContentLoaded", initClassroom);
+  </script>
+</body>
+</html>

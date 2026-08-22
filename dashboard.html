@@ -1,56 +1,381 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Analytics & Dashboard | Smart E-Learn Hub</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
-<header>
+  <!-- ================= NAVBAR ================= -->
+  <header>
     <nav class="navbar">
-        <div class="logo">E-Learn Hub</div>
+      <div class="logo" onclick="window.location.href='index.html'" style="cursor: pointer;">
+        <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
+        <span>E-Learn <span class="ai-gradient-text">Hub</span></span>
+      </div>
 
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="courses.html">Courses</a></li>
-            <li><a href="dashboard.html">Dashboard</a></li>
-        </ul>
+      <ul class="nav-links">
+        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="courses.html"><i class="fas fa-compass"></i> Explore Courses</a></li>
+        <li><a href="dashboard.html" class="active"><i class="fas fa-chart-pie"></i> Dashboard</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="btn btn-sm btn-outline" onclick="logoutUser()">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
     </nav>
-</header>
+  </header>
 
-<section class="dashboard">
+  <!-- ================= DASHBOARD MAIN ================= -->
+  <main class="container dashboard-container">
+    
+    <!-- Welcome Banner -->
+    <div class="dashboard-welcome-banner">
+      <div class="welcome-text">
+        <span class="badge badge-ai" style="margin-bottom: 8px;">
+          <i class="fas fa-fire"></i> 5-Day Study Streak Active!
+        </span>
+        <h1>Welcome Back, <span class="ai-gradient-text" id="dashUserName">Student</span> 👋</h1>
+        <p>Your personalized AI recommendations and real-time study analytics are ready below.</p>
+      </div>
 
-    <h1>Learning Dashboard</h1>
+      <div class="dashboard-actions">
+        <a href="courses.html" class="btn btn-primary">
+          <i class="fas fa-plus"></i> Browse More Courses
+        </a>
+      </div>
+    </div>
 
-    <div class="progress-card">
-        <h2>Web Development Progress</h2>
+    <!-- ================= 4 KPI STATS CARDS ================= -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon purple">
+          <i class="fas fa-book-reader"></i>
+        </div>
+        <div class="stat-details">
+          <h3 id="statEnrolled">0</h3>
+          <p>Enrolled Courses</p>
+        </div>
+      </div>
 
-        <div class="progress-bar">
-            <div class="progress" id="progress"></div>
+      <div class="stat-card">
+        <div class="stat-icon green">
+          <i class="fas fa-trophy"></i>
+        </div>
+        <div class="stat-details">
+          <h3 id="statCompleted">0</h3>
+          <p>Completed Courses</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon blue">
+          <i class="fas fa-brain"></i>
+        </div>
+        <div class="stat-details">
+          <h3 id="statQuizAvg">100%</h3>
+          <p>Avg Quiz Score</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon orange">
+          <i class="fas fa-certificate"></i>
+        </div>
+        <div class="stat-details">
+          <h3 id="statCertificates">0</h3>
+          <p>Earned Certificates</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= DASHBOARD SPLIT GRID ================= -->
+    <div class="dashboard-main-grid">
+      
+      <!-- LEFT COLUMN: Active Courses & Activity -->
+      <div>
+        
+        <!-- Enrolled Courses Panel -->
+        <div class="dashboard-panel">
+          <div class="panel-header">
+            <h2><i class="fas fa-play-circle" style="color: var(--brand-primary-light);"></i> Continue Learning</h2>
+            <span class="badge badge-primary" id="enrolledBadgeCount">0 Active</span>
+          </div>
+
+          <div id="enrolledCoursesList">
+            <!-- Injected via JavaScript -->
+          </div>
         </div>
 
-        <p id="progressText">70% Completed</p>
+        <!-- Weekly Study Activity Chart -->
+        <div class="dashboard-panel">
+          <div class="panel-header">
+            <h2><i class="fas fa-chart-bar" style="color: #38bdf8;"></i> Weekly Learning Activity</h2>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">14.5 Total Hours This Week</span>
+          </div>
+
+          <div class="activity-bars">
+            <div class="bar-col">
+              <div class="bar-fill" style="height: 45%;"></div>
+              <span class="bar-label">Mon</span>
+            </div>
+            <div class="bar-col">
+              <div class="bar-fill" style="height: 70%;"></div>
+              <span class="bar-label">Tue</span>
+            </div>
+            <div class="bar-col">
+              <div class="bar-fill" style="height: 60%;"></div>
+              <span class="bar-label">Wed</span>
+            </div>
+            <div class="bar-col">
+              <div class="bar-fill" style="height: 90%;"></div>
+              <span class="bar-label">Thu</span>
+            </div>
+            <div class="bar-col">
+              <div class="bar-fill" style="height: 85%;"></div>
+              <span class="bar-label">Fri</span>
+            </div>
+            <div class="bar-col">
+              <div class="bar-fill" style="height: 100%;"></div>
+              <span class="bar-label">Sat</span>
+            </div>
+            <div class="bar-col">
+              <div class="bar-fill" style="height: 35%;"></div>
+              <span class="bar-label">Sun</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Certificates Showcase -->
+        <div class="dashboard-panel">
+          <div class="panel-header">
+            <h2><i class="fas fa-award" style="color: #fbbf24;"></i> Verified Certificates</h2>
+            <a href="courses.html" style="font-size: 0.85rem; color: var(--brand-primary-light);">Earn More</a>
+          </div>
+
+          <div id="certificatesList">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN: AI Personalized Recommendations & Student Profile -->
+      <div>
+        
+        <!-- 🤖 AI Recommendation Engine Panel -->
+        <div class="dashboard-panel ai-recommendation-panel">
+          <div class="panel-header" style="border-bottom-color: rgba(168, 85, 247, 0.2);">
+            <h2 style="color: #c084fc;">
+              <i class="fas fa-robot"></i> AI Study Insights
+            </h2>
+            <span class="badge badge-ai">Adaptive</span>
+          </div>
+
+          <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 20px;">
+            Our neural model analyzes your quiz results and module completion speed to recommend your next milestone.
+          </p>
+
+          <div id="aiRecommendationsList">
+            <!-- Injected via JavaScript -->
+          </div>
+
+          <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(168, 85, 247, 0.2); text-align: center;">
+            <a href="learning.html?course=web-dev" class="btn btn-ai btn-sm" style="width: 100%;">
+              <i class="fas fa-comments"></i> Chat with AI Copilot in Classroom
+            </a>
+          </div>
+        </div>
+
+        <!-- Student Profile Card -->
+        <div class="dashboard-panel">
+          <div class="panel-header">
+            <h2><i class="fas fa-id-card" style="color: #60a5fa;"></i> Student Profile</h2>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
+            <div class="user-avatar-sm" id="profileAvatarBig" style="width: 54px; height: 54px; font-size: 1.4rem;">A</div>
+            <div>
+              <h3 id="profileFullName" style="font-size: 1.2rem; color: #ffffff;">Alex Morgan</h3>
+              <p id="profileEmail" style="font-size: 0.88rem; color: var(--text-muted);">demo@elearnhub.com</p>
+            </div>
+          </div>
+
+          <div style="background: var(--bg-card); padding: 16px; border-radius: var(--radius-md); font-size: 0.88rem; display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Account Role:</span>
+              <strong style="color: #ffffff;">Verified Student</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Learning Track:</span>
+              <strong style="color: #c084fc;">Full-Stack AI Developer</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Storage Sync:</span>
+              <strong style="color: var(--success);"><i class="fas fa-check-circle"></i> LocalStorage OK</strong>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
     </div>
 
-    <div class="video-section">
-        <h2>Continue Watching</h2>
+  </main>
 
-        <iframe width="100%" height="400"
-        src="https://www.youtube.com/embed/UB1O30fR-EE"
-        title="YouTube video player"
-        frameborder="0" allowfullscreen>
-        </iframe>
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <div class="container">
+      <div class="footer-bottom">
+        <p>© 2026 E-Learn Hub | Smart E-Learning Platform with AI-Based Personalized Learning</p>
+      </div>
     </div>
+  </footer>
 
-</section>
+  <script src="scripts.js"></script>
+  <script>
+    function initDashboard() {
+      const user = getCurrentUser();
+      if (!user) {
+        window.location.href = "pages/login.html";
+        return;
+      }
 
-<footer>
-    <p>© 2026 E-Learn Hub</p>
-</footer>
+      // Populate user info
+      document.getElementById("dashUserName").textContent = user.name;
+      document.getElementById("profileFullName").textContent = user.name;
+      document.getElementById("profileEmail").textContent = user.email;
+      document.getElementById("profileAvatarBig").textContent = user.name.charAt(0).toUpperCase();
 
-<script src="script.js"></script>
+      const enrolledIds = user.enrolledCourses || [];
+      const enrolledCourses = COURSES_DATABASE.filter(c => enrolledIds.includes(c.id));
+      const certificates = getUserCertificates(user.email);
+
+      // Calculate Stats
+      let completedCount = 0;
+      let totalQuizScore = 0;
+      let quizAttempts = 0;
+
+      enrolledIds.forEach(cId => {
+        const prog = getUserCourseProgress(cId);
+        if (prog.quizPassed) completedCount++;
+        if (prog.quizScore > 0) {
+          totalQuizScore += prog.quizScore;
+          quizAttempts++;
+        }
+      });
+
+      const avgQuiz = quizAttempts > 0 ? Math.round(totalQuizScore / quizAttempts) : (completedCount > 0 ? 100 : 0);
+
+      document.getElementById("statEnrolled").textContent = enrolledIds.length;
+      document.getElementById("statCompleted").textContent = completedCount;
+      document.getElementById("statQuizAvg").textContent = `${avgQuiz}%`;
+      document.getElementById("statCertificates").textContent = certificates.length;
+      document.getElementById("enrolledBadgeCount").textContent = `${enrolledIds.length} Active`;
+
+      // Render Enrolled Courses
+      const listContainer = document.getElementById("enrolledCoursesList");
+      if (enrolledCourses.length === 0) {
+        listContainer.innerHTML = `
+          <div style="text-align: center; padding: 40px 20px; background: var(--bg-card); border-radius: var(--radius-md);">
+            <i class="fas fa-book-open" style="font-size: 2.5rem; color: var(--text-muted); margin-bottom: 12px;"></i>
+            <h3 style="color: #ffffff; margin-bottom: 8px;">No courses enrolled yet</h3>
+            <p style="margin-bottom: 16px; font-size: 0.9rem;">Explore our catalog to enroll in your first interactive course.</p>
+            <a href="courses.html" class="btn btn-sm btn-primary">Browse Courses</a>
+          </div>
+        `;
+      } else {
+        listContainer.innerHTML = enrolledCourses.map(course => {
+          const prog = getUserCourseProgress(course.id);
+          return `
+            <div class="enrolled-course-item">
+              <div class="enrolled-info">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <h4>${course.title}</h4>
+                  <span class="badge ${prog.quizPassed ? 'badge-success' : 'badge-primary'}">
+                    ${prog.quizPassed ? '✓ Completed' : 'In Progress'}
+                  </span>
+                </div>
+
+                <div class="progress-bar-container">
+                  <div class="progress-bar-fill" style="width: ${prog.percent}%;"></div>
+                </div>
+
+                <div class="progress-stats-text">
+                  <span>${prog.percent}% Completed</span>
+                  <span>${prog.completedLessons.length} / ${prog.totalLessons} Lessons</span>
+                </div>
+              </div>
+
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <a href="learning.html?course=${course.id}" class="btn btn-sm btn-primary">
+                  <i class="fas fa-play"></i> ${prog.percent === 0 ? 'Start' : 'Resume'}
+                </a>
+                ${prog.quizPassed ? `
+                  <a href="certificate.html?course=${course.id}" class="btn btn-sm btn-secondary">
+                    <i class="fas fa-certificate"></i> Certificate
+                  </a>
+                ` : `
+                  <a href="learning.html?course=${course.id}" class="btn btn-sm btn-outline" style="font-size: 0.75rem;">
+                    Take Quiz
+                  </a>
+                `}
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Render Certificates
+      const certList = document.getElementById("certificatesList");
+      if (certificates.length === 0) {
+        certList.innerHTML = `
+          <div style="text-align: center; padding: 24px; background: var(--bg-card); border-radius: var(--radius-md); font-size: 0.9rem; color: var(--text-muted);">
+            Complete all lessons and pass the final course quiz (70%+) to earn your verifiable certificates.
+          </div>
+        `;
+      } else {
+        certList.innerHTML = certificates.map(c => `
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); margin-bottom: 10px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(245, 158, 11, 0.15); color: #fbbf24; display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">
+                <i class="fas fa-award"></i>
+              </div>
+              <div>
+                <h5 style="color: #ffffff; font-size: 0.95rem;">${c.courseTitle}</h5>
+                <span style="font-size: 0.75rem; color: var(--text-muted);">Issued on ${c.issueDate} • ID: ${c.id}</span>
+              </div>
+            </div>
+            <a href="certificate.html?certId=${c.id}" class="btn btn-sm btn-outline">
+              <i class="fas fa-eye"></i> View Certificate
+            </a>
+          </div>
+        `).join('');
+      }
+
+      // Render AI Recommendations
+      const aiList = document.getElementById("aiRecommendationsList");
+      const recs = aiEngine.getPersonalizedRecommendations(user.email);
+      aiList.innerHTML = recs.map(rec => `
+        <div class="ai-rec-card">
+          <h4><i class="fas fa-sparkles"></i> ${rec.title}</h4>
+          <p>${rec.reason}</p>
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span class="badge badge-ai">${rec.tag} (${rec.matchScore}%)</span>
+            <a href="learning.html?course=${rec.courseId}" class="btn btn-sm btn-ai">
+              Enroll & Start <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    document.addEventListener("DOMContentLoaded", initDashboard);
+  </script>
 </body>
 </html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Certificate | Smart E-Learn Hub</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header>
+    <nav class="navbar">
+      <div class="logo" onclick="window.location.href='index.html'" style="cursor: pointer;">
+        <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
+        <span>E-Learn <span class="ai-gradient-text">Hub</span></span>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="courses.html"><i class="fas fa-compass"></i> Courses</a></li>
+        <li><a href="dashboard.html"><i class="fas fa-chart-pie"></i> Dashboard</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="dashboard.html" class="btn btn-sm btn-secondary">
+          <i class="fas fa-arrow-left"></i> My Dashboard
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Certificate View Container -->
+  <main class="certificate-page-wrap">
+    
+    <!-- Action Controls -->
+    <div class="certificate-actions-bar">
+      <button class="btn btn-primary" onclick="window.print()">
+        <i class="fas fa-print"></i> Print / Save as PDF
+      </button>
+      <button class="btn btn-secondary" onclick="copyVerificationLink()">
+        <i class="fas fa-link"></i> Copy Verification Link
+      </button>
+      <a href="courses.html" class="btn btn-outline">
+        <i class="fas fa-plus"></i> Explore More Courses
+      </a>
+    </div>
+
+    <!-- Official Certificate Frame -->
+    <div class="certificate-frame" id="certificateNode">
+      <div class="certificate-inner-border">
+        
+        <!-- Header -->
+        <div class="cert-header">
+          <i class="fas fa-graduation-cap" style="color: #4338ca; font-size: 2rem;"></i>
+          <span>SMART E-LEARN HUB ACADEMY</span>
+        </div>
+
+        <div class="cert-subtitle">Certificate of Completion</div>
+
+        <!-- Title -->
+        <h1 class="cert-title">PROUDLY PRESENTED TO</h1>
+
+        <!-- Student Name -->
+        <div class="cert-recipient" id="certStudentName">Alex Morgan</div>
+
+        <!-- Course Description -->
+        <p class="cert-desc">
+          For successfully completing all instructional modules, interactive challenges, and passing the comprehensive evaluation examination in
+        </p>
+
+        <!-- Course Name -->
+        <div class="cert-course-name" id="certCourseTitle">
+          Full-Stack Web Development & Modern React
+        </div>
+
+        <!-- Footer / Signatures & Badge -->
+        <div class="cert-footer-row">
+          
+          <div class="cert-signature-box">
+            <div class="cert-sign-line" id="certInstructorSign">Sarah Jenkins</div>
+            <div class="cert-sign-title">Lead Instructor</div>
+          </div>
+
+          <div style="text-align: center;">
+            <div class="cert-badge-gold">
+              <i class="fas fa-medal"></i>
+            </div>
+            <div class="cert-id-tag" id="certIdBadge" style="margin-top: 8px;">ID: CERT-8493021</div>
+          </div>
+
+          <div class="cert-signature-box">
+            <div class="cert-sign-line" id="certIssueDate">August 22, 2026</div>
+            <div class="cert-sign-title">Issue Date</div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <script src="scripts.js"></script>
+  <script>
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    function initCertificate() {
+      const user = getCurrentUser();
+      const courseId = getQueryParam("course") || "python-pro";
+      const certId = getQueryParam("certId");
+
+      const course = COURSES_DATABASE.find(c => c.id === courseId) || COURSES_DATABASE[1];
+      const certs = JSON.parse(localStorage.getItem(STORAGE_KEYS.CERTIFICATES)) || [];
+      
+      let cert = null;
+      if (certId) {
+        cert = certs.find(c => c.id === certId);
+      } else if (user) {
+        cert = certs.find(c => c.userEmail === user.email && c.courseId === course.id);
+      }
+
+      // If no certificate found, create or mock from active user/course
+      if (!cert) {
+        cert = {
+          id: "CERT-" + Math.random().toString(36).substring(2, 9).toUpperCase(),
+          studentName: user ? user.name : "Alex Morgan",
+          courseTitle: course.title,
+          instructor: course.instructor,
+          issueDate: new Date().toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' })
+        };
+      }
+
+      document.getElementById("certStudentName").textContent = cert.studentName;
+      document.getElementById("certCourseTitle").textContent = cert.courseTitle;
+      document.getElementById("certInstructorSign").textContent = cert.instructor;
+      document.getElementById("certIssueDate").textContent = cert.issueDate;
+      document.getElementById("certIdBadge").textContent = `ID: ${cert.id}`;
+    }
+
+    function copyVerificationLink() {
+      const dummyUrl = window.location.href;
+      navigator.clipboard.writeText(dummyUrl).then(() => {
+        showToast("Certificate verification link copied to clipboard!", "success");
+      }).catch(() => {
+        showToast("Link: " + dummyUrl, "info");
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", initCertificate);
+  </script>
+</body>
+</html>

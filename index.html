@@ -1,59 +1,301 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Learn Hub</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart E-Learning Platform | AI-Powered Personalized Learning</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
-<header>
+  <!-- ================= NAVBAR ================= -->
+  <header>
     <nav class="navbar">
-        <div class="logo">E-Learn Hub</div>
+      <div class="logo" onclick="window.location.href='index.html'" style="cursor: pointer;">
+        <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
+        <span>E-Learn <span class="ai-gradient-text">Hub</span></span>
+      </div>
 
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="courses.html">Courses</a></li>
-            <li><a href="dashboard.html">Dashboard</a></li>
-        </ul>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="courses.html"><i class="fas fa-compass"></i> Explore Courses</a></li>
+        <li><a href="dashboard.html"><i class="fas fa-chart-pie"></i> Dashboard</a></li>
+        <li class="nav-auth-item"><a href="pages/login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+        <li class="nav-auth-item">
+          <a href="pages/register.html" class="btn btn-sm btn-primary">
+            Get Started Free
+          </a>
+        </li>
+      </ul>
+
+      <button class="mobile-menu-btn" onclick="alert('Menu clicked - explore navigation links!')">
+        <i class="fas fa-bars"></i>
+      </button>
     </nav>
-</header>
+  </header>
 
-<section class="hero">
-    <div class="hero-content">
-        <h1>Upgrade Your Skills Online</h1>
-        <p>Learn from industry experts anytime and anywhere.</p>
-        <a href="courses.html" class="btn">Explore Courses</a>
+  <!-- ================= HERO SECTION ================= -->
+  <section class="hero">
+    <div class="hero-glow-1"></div>
+    <div class="hero-glow-2"></div>
+
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-tag">
+          <span class="badge badge-ai">
+            <i class="fas fa-sparkles"></i> AI-Powered Adaptive Learning
+          </span>
+        </div>
+
+        <h1>
+          Master Future Skills with <span class="ai-gradient-text">Personalized AI</span> Tutoring
+        </h1>
+
+        <p>
+          Experience an intelligent e-learning platform that adapts to your learning pace, analyzes quiz weaknesses in real-time, and curates tailor-made career pathways.
+        </p>
+
+        <div class="hero-cta">
+          <a href="courses.html" class="btn btn-primary btn-lg">
+            <i class="fas fa-play"></i> Start Learning Now
+          </a>
+          <a href="pages/login.html" class="btn btn-secondary btn-lg">
+            <i class="fas fa-user-check"></i> Try Demo Account
+          </a>
+        </div>
+
+        <div class="hero-stats-strip">
+          <div class="stat-item">
+            <h4>100%</h4>
+            <p>Interactive Quizzes</p>
+          </div>
+          <div class="stat-item">
+            <h4>8+</h4>
+            <p>Industry Tracks</p>
+          </div>
+          <div class="stat-item">
+            <h4>24/7</h4>
+            <p>AI Copilot Assistance</p>
+          </div>
+          <div class="stat-item">
+            <h4>Instant</h4>
+            <p>Certifications</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Visual Card with AI Simulation -->
+      <div class="hero-visual">
+        <div class="hero-ai-preview-card">
+          <div class="preview-header">
+            <div class="preview-bot-info">
+              <div class="bot-avatar"><i class="fas fa-brain"></i></div>
+              <div>
+                <h4 style="font-size: 1rem; color: #ffffff;">AI Learning Copilot</h4>
+                <span class="badge badge-success" style="padding: 2px 8px; font-size: 0.65rem;">Active & Analyzing</span>
+              </div>
+            </div>
+            <i class="fas fa-ellipsis-h" style="color: var(--text-muted);"></i>
+          </div>
+
+          <div class="preview-chat-bubble">
+            "Hello Alex! Based on your 100% score on Python Automation, I’ve prepared an advanced <strong>Deep Learning & AI track</strong> tailored to your strengths."
+          </div>
+
+          <div class="preview-recommendation">
+            <div class="preview-course-mini">
+              <div class="course-icon-badge" style="background: linear-gradient(135deg, #a855f7, #6366f1);">
+                <i class="fas fa-microchip"></i>
+              </div>
+              <div>
+                <h5 style="color: #ffffff; font-size: 0.95rem;">Artificial Intelligence & LLMs</h5>
+                <span style="font-size: 0.78rem; color: #c084fc;">99% Match Affinity</span>
+              </div>
+            </div>
+            <a href="learning.html?course=ai-ml" class="btn btn-sm btn-ai">
+              Resume <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="floating-badge-1">
+          <i class="fas fa-check-circle" style="color: var(--success);"></i>
+          <span style="font-size: 0.85rem; font-weight: 600;">Quiz Verified</span>
+        </div>
+
+        <div class="floating-badge-2">
+          <i class="fas fa-award" style="color: #fbbf24;"></i>
+          <span style="font-size: 0.85rem; font-weight: 600;">Certificate Ready</span>
+        </div>
+      </div>
     </div>
-</section>
+  </section>
 
-<section class="features">
+  <!-- ================= KEY FEATURES ================= -->
+  <section class="section-padding" style="background: var(--bg-primary);">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge badge-primary">Supercharged Experience</span>
+        <h2>Why Learn with Smart E-Learn Hub?</h2>
+        <p>Built from the ground up to provide seamless learning, actionable progress analytics, and instant certification.</p>
+      </div>
 
-    <div class="feature-card">
-        <i class="fas fa-video"></i>
-        <h3>Video Lessons</h3>
-        <p>Interactive video-based learning experience.</p>
+      <div class="features-grid">
+        <div class="feature-card ai-card">
+          <div class="feature-icon-wrapper">
+            <i class="fas fa-robot"></i>
+          </div>
+          <h3>AI-Powered Personalization</h3>
+          <p>Real-time recommendation engine that charts personalized course roadmaps based on your quiz results and learning velocity.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <i class="fas fa-laptop-code"></i>
+          </div>
+          <h3>Interactive Classroom</h3>
+          <p>High-definition video lessons with synced transcripts, downloadable cheat sheets, and integrated note-taking systems.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <i class="fas fa-brain"></i>
+          </div>
+          <h3>Automated Quiz Evaluation</h3>
+          <p>Assess your mastery with timed multiple-choice quizzes, instant score generation, and AI diagnostic feedback on weak areas.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h3>Analytics & Streak Dashboard</h3>
+          <p>Track your enrolled courses, lesson milestones, overall progress, and study streak via a centralized modern dashboard.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <i class="fas fa-certificate"></i>
+          </div>
+          <h3>Verifiable Certificates</h3>
+          <p>Earn official completion certificates with unique verification IDs, ready to print or save directly as PDF.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <i class="fas fa-database"></i>
+          </div>
+          <h3>Persistent LocalStorage</h3>
+          <p>All your progress, quiz attempts, and certificates remain securely stored in your browser without requiring external server setup.</p>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <div class="feature-card">
-        <i class="fas fa-chart-line"></i>
-        <h3>Track Progress</h3>
-        <p>Monitor your learning journey easily.</p>
+  <!-- ================= FEATURED COURSES PREVIEW ================= -->
+  <section class="section-padding" style="background: var(--bg-secondary);">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge badge-ai">Curated Curriculum</span>
+        <h2>Popular Learning Paths</h2>
+        <p>Explore top-rated courses designed by industry architects and tech leaders.</p>
+      </div>
+
+      <div class="course-grid" id="featuredCoursesGrid">
+        <!-- Injected via JavaScript below -->
+      </div>
+
+      <div style="text-align: center; margin-top: 20px;">
+        <a href="courses.html" class="btn btn-primary btn-lg">
+          <i class="fas fa-th-large"></i> Browse All Courses & Tracks
+        </a>
+      </div>
     </div>
+  </section>
 
-    <div class="feature-card">
-        <i class="fas fa-certificate"></i>
-        <h3>Certification</h3>
-        <p>Get certificates after course completion.</p>
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo">
+            <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
+            <span>E-Learn <span class="ai-gradient-text">Hub</span></span>
+          </div>
+          <p>Next-generation smart e-learning platform featuring AI-based personalized recommendations and interactive classrooms.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="courses.html">All Courses</a></li>
+            <li><a href="dashboard.html">Student Dashboard</a></li>
+            <li><a href="pages/login.html">Login / Register</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Topics</h4>
+          <ul>
+            <li><a href="courses.html?cat=web">Web Development</a></li>
+            <li><a href="courses.html?cat=ai">AI & Deep Learning</a></li>
+            <li><a href="courses.html?cat=programming">Python Mastery</a></li>
+            <li><a href="courses.html?cat=security">Cybersecurity</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Platform Status</h4>
+          <p style="font-size: 0.9rem; margin-bottom: 12px;">Client Storage Engine: <span class="badge badge-success">Online & Synced</span></p>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Smart E-Learning Platform with AI-Based Personalized Learning.</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 E-Learn Hub | Smart E-Learning Platform with AI-Based Personalized Learning</p>
+      </div>
     </div>
+  </footer>
 
-</section>
+  <script src="scripts.js"></script>
+  <script>
+    // Render top 3 featured courses
+    document.addEventListener("DOMContentLoaded", () => {
+      const grid = document.getElementById("featuredCoursesGrid");
+      if (!grid) return;
 
-<footer>
-    <p>© 2026 E-Learn Hub | CODTECH Internship Task</p>
-</footer>
+      const topCourses = COURSES_DATABASE.slice(0, 3);
+      grid.innerHTML = topCourses.map(course => `
+        <div class="course-card">
+          <div class="course-thumbnail">
+            <img src="${course.image}" alt="${course.title}">
+            <span class="badge badge-primary course-level-badge">${course.level}</span>
+            <span class="course-category-tag">${course.categoryName}</span>
+          </div>
 
+          <div class="course-body">
+            <div class="course-meta-top">
+              <div class="course-rating"><i class="fas fa-star"></i> ${course.rating}</div>
+              <div class="course-duration"><i class="far fa-clock"></i> ${course.duration}</div>
+            </div>
+
+            <h3>${course.title}</h3>
+            <p>${course.description.substring(0, 100)}...</p>
+
+            <div class="course-footer">
+              <div class="course-instructor">
+                <i class="fas fa-user-tie"></i> ${course.instructor}
+              </div>
+              <a href="learning.html?course=${course.id}" class="btn btn-sm btn-primary">
+                Learn Now <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    });
+  </script>
 </body>
 </html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Student Account | Smart E-Learn Hub</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header>
+    <nav class="navbar">
+      <div class="logo" onclick="window.location.href='../index.html'" style="cursor: pointer;">
+        <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
+        <span>E-Learn <span class="ai-gradient-text">Hub</span></span>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="../index.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="../courses.html"><i class="fas fa-compass"></i> Courses</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="auth-page-wrapper">
+    <div class="auth-card-split">
+      
+      <!-- Left Brand & Highlights -->
+      <div class="auth-brand-side">
+        <div>
+          <span class="badge badge-ai" style="margin-bottom: 16px;">
+            <i class="fas fa-rocket"></i> Start Your Journey
+          </span>
+          <h2 style="font-size: 2.2rem; margin-bottom: 14px;">Join Thousands of Learners</h2>
+          <p style="color: rgba(255, 255, 255, 0.75); line-height: 1.7;">
+            Unlock interactive lessons, AI-guided learning recommendations, and verified certifications today.
+          </p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <i class="fas fa-check-circle" style="color: var(--success); font-size: 1.2rem;"></i>
+            <span>Instant access to full course catalog</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <i class="fas fa-check-circle" style="color: var(--success); font-size: 1.2rem;"></i>
+            <span>Real-time score evaluations & AI tips</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <i class="fas fa-check-circle" style="color: var(--success); font-size: 1.2rem;"></i>
+            <span>No subscription required – 100% Free</span>
+          </div>
+        </div>
+
+        <div style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.5);">
+          © 2026 Smart E-Learn Hub Platform
+        </div>
+      </div>
+
+      <!-- Right Form Side -->
+      <div class="auth-form-side">
+        <h2>Create Account</h2>
+        <p class="auth-sub">Sign up in seconds to start learning</p>
+
+        <form id="registerForm" onsubmit="handleRegisterSubmit(event)">
+          <div class="form-group">
+            <label for="regName">Full Name</label>
+            <div class="form-input-wrap">
+              <i class="fas fa-user input-icon"></i>
+              <input type="text" id="regName" placeholder="e.g. Jane Doe" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="regEmail">Email Address</label>
+            <div class="form-input-wrap">
+              <i class="fas fa-envelope input-icon"></i>
+              <input type="email" id="regEmail" placeholder="jane@example.com" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="regPassword">Password</label>
+            <div class="form-input-wrap">
+              <i class="fas fa-lock input-icon"></i>
+              <input type="password" id="regPassword" placeholder="Minimum 6 characters" required>
+              <i class="fas fa-eye password-toggle" onclick="togglePasswordVisibility('regPassword', this)"></i>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-ai" style="width: 100%; margin-top: 10px;">
+            <i class="fas fa-user-plus"></i> Create Free Account
+          </button>
+        </form>
+
+        <p style="text-align: center; margin-top: 24px; font-size: 0.92rem; color: var(--text-secondary);">
+          Already have an account? 
+          <a href="login.html" style="color: var(--brand-primary-light); font-weight: 600;">Sign In</a>
+        </p>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="../scripts.js"></script>
+  <script>
+    function togglePasswordVisibility(fieldId, icon) {
+      const input = document.getElementById(fieldId);
+      if (input.type === "password") {
+        input.type = "text";
+        icon.classList.replace("fa-eye", "fa-eye-slash");
+      } else {
+        input.type = "password";
+        icon.classList.replace("fa-eye-slash", "fa-eye");
+      }
+    }
+
+    function handleRegisterSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById("regName").value;
+      const email = document.getElementById("regEmail").value;
+      const pass = document.getElementById("regPassword").value;
+
+      if (pass.length < 4) {
+        showToast("Password must be at least 4 characters long", "warning");
+        return;
+      }
+
+      const res = registerUser(name, email, pass);
+      if (res.success) {
+        showToast("Account created successfully! Welcome aboard.", "success");
+        setTimeout(() => {
+          window.location.href = "../dashboard.html";
+        }, 600);
+      } else {
+        showToast(res.message, "danger");
+      }
+    }
+  </script>
+</body>
+</html>
